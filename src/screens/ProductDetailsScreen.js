@@ -29,7 +29,6 @@ const ProductDetailsScreen = () => {
             <Image
               source={{ uri: item }}
               style={{
-                // width: "100%",
                 width: width,
                 aspectRatio: 1,
               }}
@@ -41,17 +40,11 @@ const ProductDetailsScreen = () => {
         />
 
         <View style={{ padding: 20 }}>
-          {/* Title */}
           <Text style={styles.title}>{product.name}</Text>
-
-          {/* Price */}
           <Text style={styles.price}>$ {product.price}</Text>
-
-          {/* Description */}
           <Text style={styles.description}>{product.description}</Text>
         </View>
       </ScrollView>
-      {/* Add to cart button */}
       <Pressable
         style={[styles.button, { width: width - 40 }]}
         onPress={() => addToCart()}
