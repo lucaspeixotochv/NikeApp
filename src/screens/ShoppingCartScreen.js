@@ -7,33 +7,47 @@ import {
   useWindowDimensions,
 } from "react-native";
 import React from "react";
-import cart from "../data/cart";
 import CartListItem from "../components/CartListItem";
+import { useSelector } from "react-redux";
+import {
+  selectSubtotal,
+  selectDeliveryPrice,
+  selectTotal,
+} from "../store/cartSlice";
 
-const ShoppingCartTotals = () => (
-  <View style={styles.totalsContainer}>
-    <View style={styles.rows}>
-      <Text style={styles.text}>Subtotal</Text>
-      <Text style={styles.text}>410,00 $</Text>
+const ShoppingCartTotals = () => {
+  const subtotal = useSelector(selectSubtotal);
+  const deliveryPrice = useSelector(selectDeliveryPrice);
+  const total = useSelector(selectTotal);
+
+  return (
+    <View style={styles.totalsContainer}>
+      <View style={styles.rows}>
+        <Text style={styles.text}>Subtotal</Text>
+        <Text style={styles.text}>{Number(subtotal).toFixed(2)} US$</Text>
+      </View>
+      <View style={styles.rows}>
+        <Text style={styles.text}>Delivery</Text>
+        <Text style={styles.text}>
+          {deliveryPrice > 0 ? `${deliveryPrice.toFixed(2)} US$` : "For Free"}
+        </Text>
+      </View>
+      <View style={styles.rows}>
+        <Text style={styles.textBold}>Total</Text>
+        <Text style={styles.textBold}>{Number(total).toFixed(2)} US$</Text>
+      </View>
     </View>
-    <View style={styles.rows}>
-      <Text style={styles.text}>Delivery</Text>
-      <Text style={styles.text}>10,00 $</Text>
-    </View>
-    <View style={styles.rows}>
-      <Text style={styles.textBold}>Total</Text>
-      <Text style={styles.textBold}>420,00 $</Text>
-    </View>
-  </View>
-);
+  );
+};
 
 const ShoppingCartScreen = () => {
   const { width } = useWindowDimensions();
+  const cartItems = useSelector((state) => state.cart.items);
 
   return (
     <>
       <FlatList
-        data={cart}
+        data={cartItems}
         renderItem={({ item }) => <CartListItem cartItem={item} />}
         ListFooterComponent={ShoppingCartTotals}
       />

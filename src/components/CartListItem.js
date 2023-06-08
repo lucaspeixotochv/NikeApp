@@ -1,10 +1,28 @@
 import { View, Text, StyleSheet, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { useDispatch } from "react-redux";
+import { cartSlice } from "../store/cartSlice";
 
 const CartListItem = ({ cartItem }) => {
-  const increaseQuantity = () => {};
+  const dispatch = useDispatch();
 
-  const decreaseQuantity = () => {};
+  const increaseQuantity = () => {
+    dispatch(
+      cartSlice.actions.changeQuantity({
+        productId: cartItem.product.id,
+        amount: 1,
+      })
+    );
+  };
+
+  const decreaseQuantity = () => {
+    dispatch(
+      cartSlice.actions.changeQuantity({
+        productId: cartItem.product.id,
+        amount: -1,
+      })
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -15,19 +33,21 @@ const CartListItem = ({ cartItem }) => {
 
         <View style={styles.footer}>
           <Feather
-            onPress={increaseQuantity}
+            onPress={decreaseQuantity}
             name="minus-circle"
             size={24}
             color="gray"
           />
           <Text style={styles.quantity}>{cartItem.quantity}</Text>
           <Feather
-            onPress={decreaseQuantity}
+            onPress={increaseQuantity}
             name="plus-circle"
             size={24}
             color="gray"
           />
-          <Text style={styles.itemTotal}>$320.0</Text>
+          <Text style={styles.itemTotal}>
+            ${Number(cartItem.product.price * cartItem.quantity).toFixed(2)}
+          </Text>
         </View>
       </View>
     </View>
