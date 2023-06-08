@@ -14,6 +14,7 @@ import {
   selectDeliveryPrice,
   selectTotal,
 } from "../store/cartSlice";
+import EmptyCardItems from "../components/EmptyCardItems";
 
 const ShoppingCartTotals = () => {
   const subtotal = useSelector(selectSubtotal);
@@ -46,14 +47,20 @@ const ShoppingCartScreen = () => {
 
   return (
     <>
-      <FlatList
-        data={cartItems}
-        renderItem={({ item }) => <CartListItem cartItem={item} />}
-        ListFooterComponent={ShoppingCartTotals}
-      />
-      <Pressable style={[styles.button, { width: width - 40 }]}>
-        <Text style={styles.buttonText}>Checkout</Text>
-      </Pressable>
+      {cartItems.length > 0 ? (
+        <>
+          <FlatList
+            data={cartItems}
+            renderItem={({ item }) => <CartListItem cartItem={item} />}
+            ListFooterComponent={ShoppingCartTotals}
+          />
+          <Pressable style={[styles.button, { width: width - 40 }]}>
+            <Text style={styles.buttonText}>Checkout</Text>
+          </Pressable>
+        </>
+      ) : (
+        <EmptyCardItems />
+      )}
     </>
   );
 };

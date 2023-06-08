@@ -7,8 +7,10 @@ import { store } from "./src/store";
 export default function App() {
   return (
     <Provider store={store}>
-      <Navigation />
-      <StatusBar style="auto" />
+      <View style={styles.container}>
+        <Navigation />
+        <StatusBar style="auto" />
+      </View>
     </Provider>
   );
 }

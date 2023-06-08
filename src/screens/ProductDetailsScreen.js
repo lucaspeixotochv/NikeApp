@@ -9,23 +9,24 @@ import {
   Pressable,
 } from "react-native";
 import React from "react";
-import products from "../data/products";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { cartSlice } from "../store/cartSlice";
+import ToastManager, { Toast } from "toastify-react-native";
 
 const ProductDetailsScreen = () => {
-  // const product = products[0];
   const { width } = useWindowDimensions();
   const product = useSelector((state) => state.products.selectedProduct);
   const dispatch = useDispatch();
 
   const addToCart = () => {
     dispatch(cartSlice.actions.addCartItem({ product }));
+    Toast.success("Added to cart !");
   };
 
   return (
     <View>
+      <ToastManager position="top" />
       <ScrollView>
         <FlatList
           data={product.images}
@@ -55,7 +56,6 @@ const ProductDetailsScreen = () => {
       >
         <Text style={styles.buttonText}>Add to cart</Text>
       </Pressable>
-      {/* Navigation icon */}
     </View>
   );
 };

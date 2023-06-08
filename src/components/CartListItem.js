@@ -32,12 +32,21 @@ const CartListItem = ({ cartItem }) => {
         <Text style={styles.size}>Size {cartItem.size}</Text>
 
         <View style={styles.footer}>
-          <Feather
-            onPress={decreaseQuantity}
-            name="minus-circle"
-            size={24}
-            color="gray"
-          />
+          {cartItem.quantity > 1 ? (
+            <Feather
+              onPress={decreaseQuantity}
+              name="minus-circle"
+              size={24}
+              color="gray"
+            />
+          ) : (
+            <Feather
+              name="trash"
+              onPress={decreaseQuantity}
+              size={24}
+              color="gray"
+            />
+          )}
           <Text style={styles.quantity}>{cartItem.quantity}</Text>
           <Feather
             onPress={increaseQuantity}
